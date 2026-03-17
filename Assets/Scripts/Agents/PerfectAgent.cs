@@ -1,23 +1,14 @@
-using System.Collections;
 using System.Collections.Generic;
+using System.Collections;
 using UnityEngine;
 
-public class DungeonAgent : MonoBehaviour
+public class PerfectAgent : DungeonAgent
 {
-    [SerializeField] private float _moveSpeed = 4f;
-    [SerializeField] private float _tileSize = 1f;
-
     private List<Vector2Int> _currentPath;
     private Coroutine _moveRoutine;
 
-    public void Initialize(DungeonData dungeon)
+    protected override void SolveDungeon(DungeonData dungeon)
     {
-        transform.position = dungeon.GridToWorld(dungeon.StartPosition, _tileSize);
-        SolveDungeon(dungeon);
-    }
-
-    private void SolveDungeon(DungeonData dungeon)
-    {        
         _currentPath = Pathfinder.FindPath(dungeon, dungeon.StartPosition, dungeon.ExitPosition);
 
         if (_currentPath == null || _currentPath.Count == 0)

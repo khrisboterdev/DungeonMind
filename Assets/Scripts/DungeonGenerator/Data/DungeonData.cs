@@ -7,6 +7,7 @@ public class DungeonData
     public List<Room> Rooms;
     public Vector2Int StartPosition;
     public Vector2Int ExitPosition;
+    public float ComplexityScore;
 
     public int Width => Tiles.GetLength(0);
     public int Height => Tiles.GetLength(1);

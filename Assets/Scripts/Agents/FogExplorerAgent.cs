@@ -19,6 +19,8 @@ public class FogExplorerAgent : DungeonAgent
     private Coroutine _exploreRoutine;
     private bool _foundExit = false;
 
+    private float _startTime = 0;
+
     protected override void SolveDungeon(DungeonData dungeon)
     {
         _currentDungeon = dungeon;
@@ -45,12 +47,14 @@ public class FogExplorerAgent : DungeonAgent
 
     private IEnumerator ExploreRoutine()
     {
+        _startTime = Time.time;
+
         while (!_foundExit)
         {
             if (_currentGridPosition == _currentDungeon.ExitPosition)
             {
                 _foundExit = true;
-                Debug.Log("Explorer found the exit.");
+                ReportMetrics();
                 yield break;
             }
 
@@ -66,6 +70,16 @@ public class FogExplorerAgent : DungeonAgent
                 yield break;
             }
         }
+    }
+
+    private void ReportMetrics()
+    {
+        _runMetrics.ReachedExit = true;
+        _runMetrics.CompletionTime = Time.time - _startTime;
+        _runMetrics.TilesDiscovered = _discoveredTiles.Count;
+        _runMetrics.TilesVisited = _visitedTiles.Count;
+
+        MetricsManager.Instance.AgentCompleted(this, _runMetrics);
     }
 
     private Vector2Int? GetNextMove()
@@ -85,6 +99,7 @@ public class FogExplorerAgent : DungeonAgent
         // 2. No new neighbors? Backtrack
         if (_pathStack.Count > 1)
         {
+            _runMetrics.BacktrackCount += 1;
             _pathStack.Pop(); // remove current
             return _pathStack.Peek(); // go back
         }
@@ -117,6 +132,7 @@ public class FogExplorerAgent : DungeonAgent
 
         RevealAround(_currentGridPosition);
 
+        _runMetrics.StepsTaken += 1;
         yield return new WaitForSeconds(_pauseAtTile);
     }
 

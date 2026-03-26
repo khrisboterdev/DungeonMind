@@ -15,6 +15,7 @@ public class DungeonDataGenerator : MonoBehaviour
     [SerializeField] private int _roomPadding = 1;
 
     private int _retryCount = 3;
+    private int _walkableCount = 0;
 
     /// <summary>
     /// Generates the dungeon data needed to render the dungeon itself.
@@ -29,6 +30,8 @@ public class DungeonDataGenerator : MonoBehaviour
         GenerateRooms(dungeon);
         ConnectRooms(dungeon);
         BuildWalls(dungeon);
+
+        dungeon.ComplexityScore += _walkableCount * 0.05f;
 
         if (dungeon.Rooms.Count > 0)
         {
@@ -101,6 +104,8 @@ public class DungeonDataGenerator : MonoBehaviour
             dungeon.Rooms.Add(newRoom);
             CarveRoom(dungeon, newRoom);
         }
+
+        dungeon.ComplexityScore += dungeon.Rooms.Count * 3f;
     }
 
     private void CarveRoom(DungeonData dungeon, Room room)
@@ -110,6 +115,7 @@ public class DungeonDataGenerator : MonoBehaviour
             for (int y = room.Bounds.yMin; y < room.Bounds.yMax; y++)
             {
                 dungeon.Tiles[x, y] = TileType.Floor;
+                _walkableCount++;
             }
         }
     }
@@ -128,6 +134,7 @@ public class DungeonDataGenerator : MonoBehaviour
             Vector2Int nextCenter = dungeon.Rooms[i + 1].Center;
 
             CarveCorridor(dungeon, currentCenter, nextCenter);
+            dungeon.ComplexityScore += 2;
 
             // small possibility to create an extra hallway.
             if (i < dungeon.Rooms.Count - 3 && Random.value <= 0.25f)
@@ -135,6 +142,7 @@ public class DungeonDataGenerator : MonoBehaviour
                 nextCenter = dungeon.Rooms[i + 2].Center;
 
                 CarveCorridor(dungeon, currentCenter, nextCenter);
+                dungeon.ComplexityScore += 2;
             }
         }
     }
@@ -167,7 +175,10 @@ public class DungeonDataGenerator : MonoBehaviour
             if (isEndpoint || !HasAdjacentCorridorHorizontal(dungeon, x, y))
             {
                 if (dungeon.Tiles[x, y] == TileType.Empty)
+                {
                     dungeon.Tiles[x, y] = TileType.Corridor;
+                    _walkableCount++;
+                }
             }
         }
     }
@@ -184,7 +195,10 @@ public class DungeonDataGenerator : MonoBehaviour
             if (isEndpoint || !HasAdjacentCorridorVertical(dungeon, x, y))
             {
                 if (dungeon.Tiles[x, y] == TileType.Empty)
+                {
                     dungeon.Tiles[x, y] = TileType.Corridor;
+                    _walkableCount++;
+                }
             }
         }
     }

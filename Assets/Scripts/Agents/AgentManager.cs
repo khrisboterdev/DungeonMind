@@ -7,7 +7,7 @@ public class AgentManager : MonoBehaviour
     [SerializeField] private GameObject _perfectAgentPrefab;    
     [SerializeField] private GameObject _fogAgentPrefab;
 
-    private void Start()
+    private void Awake()
     {
         DungeonManager dungeonManager = FindFirstObjectByType<DungeonManager>();
         if (dungeonManager == null)

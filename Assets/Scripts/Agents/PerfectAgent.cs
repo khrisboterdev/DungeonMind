@@ -7,6 +7,8 @@ public class PerfectAgent : DungeonAgent
     private List<Vector2Int> _currentPath;
     private Coroutine _moveRoutine;
 
+    private float _startTime;
+
     protected override void SolveDungeon(DungeonData dungeon)
     {
         _currentPath = Pathfinder.FindPath(dungeon, dungeon.StartPosition, dungeon.ExitPosition);
@@ -30,6 +32,8 @@ public class PerfectAgent : DungeonAgent
 
     private IEnumerator FollowPath()
     {
+        _startTime = Time.time;
+
         for (int i = 1; i < _currentPath.Count; i++)
         {
             Vector3 targetPosition = GridToWorld(_currentPath[i]);
@@ -45,11 +49,23 @@ public class PerfectAgent : DungeonAgent
                 yield return null;
             }
 
+            _runMetrics.StepsTaken += 1;
+            _runMetrics.TilesVisited += 1;
+            _runMetrics.TilesDiscovered += 1;
+
             transform.position = targetPosition;
         }
 
         Debug.Log("Agent reached the exit.");
+        ReportSolveMetrics();
         Destroy(gameObject);
+    }
+
+    private void ReportSolveMetrics()
+    {
+        _runMetrics.CompletionTime = Time.time - _startTime;
+        _runMetrics.ReachedExit = true;
+        MetricsManager.Instance.AgentCompleted(this, _runMetrics);
     }
 
     private Vector3 GridToWorld(Vector2Int gridPosition)

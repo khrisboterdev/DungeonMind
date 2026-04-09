@@ -8,6 +8,8 @@ public class MetricsManager : MonoBehaviour
     private Dictionary<DungeonAgent, RunMetrics> _currentMetrics = new();
     private int _optimalPathLength;
 
+    private DungeonData _dungeonData;
+
     private void Awake()
     {
         Instance = this;
@@ -27,6 +29,8 @@ public class MetricsManager : MonoBehaviour
 
     private void OnDungeonFinished(DungeonData dungeon)
     {
+        _dungeonData = dungeon;
+
         var path = Pathfinder.FindPath(dungeon, dungeon.StartPosition, dungeon.ExitPosition);
         if (path != null)
         {
@@ -52,5 +56,27 @@ public class MetricsManager : MonoBehaviour
         Debug.Log("Agent Finished. Printing Stats:");
         metrics.OptimalPathLength = _optimalPathLength;
         Debug.Log(metrics.ToString());
+
+        SimulationResultIO.AppendRunResult($"{agent.name}_runs.json", ConvertRunMetricsToRunResult(metrics));
+    }
+
+    private SimulationRunResult ConvertRunMetricsToRunResult(RunMetrics metrics)
+    {
+        SimulationRunResult result = new();
+        // agent data
+        result.AgentName = metrics.AgentName;
+        result.Finished = metrics.ReachedExit;
+        result.FinishedTime = metrics.CompletionTime;
+        result.TilesVisited = metrics.TilesVisited;
+        result.TilesDiscovered = metrics.TilesDiscovered;
+        result.TotalSteps = metrics.StepsTaken;
+        result.BacktrackSteps = metrics.BacktrackCount;
+        result.OptimalPathSteps = metrics.OptimalPathLength;
+        result.EfficiencyScore = metrics.EfficiencyRatio;
+        // dungeon data
+        result.ComplexityScore = _dungeonData.ComplexityScore;
+        result.RoomCount = _dungeonData.Rooms.Count;
+        result.WalkableTileCount = _dungeonData.WalkableTiles().Count;        
+        return result;
     }
 }

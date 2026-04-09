@@ -24,9 +24,13 @@ public class AgentManager : MonoBehaviour
         GameObject newPerfectAgent = Instantiate(_perfectAgentPrefab);
         newPerfectAgent.GetComponent<DungeonAgent>().Initialize(dungeon);
 
-        GameObject newFogAgent = Instantiate(_fogAgentPrefab);
-        newFogAgent.GetComponent<DungeonAgent>().Initialize(dungeon);
+        for (int i = 0; i < 3; i++)
+        {
+            GameObject newFogAgent = Instantiate(_fogAgentPrefab);
+            newFogAgent.GetComponent<DungeonAgent>().Initialize(dungeon);
 
-        FindFirstObjectByType<DungeonViewer>().StartFollowAgent(newFogAgent.transform);
+            if (i == 0)
+                FindFirstObjectByType<DungeonViewer>().StartFollowAgent(newFogAgent.transform);
+        }        
     }
 }

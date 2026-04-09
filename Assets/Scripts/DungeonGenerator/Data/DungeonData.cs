@@ -33,4 +33,28 @@ public class DungeonData
             (gridPosition.y + 0.5f) * tileSize
         );
     }
+
+    public List<TileType> WalkableTiles()
+    {
+        List<TileType> result = new();
+
+        for (int i = 0; i < Tiles.GetLength(0); i++)
+        {
+            for (int j = 0; j < Tiles.GetLength(1); j++)
+            {
+                var tile = Tiles[i, j];
+                switch (tile)
+                {
+                    case TileType.Floor:
+                    case TileType.Corridor:
+                    case TileType.Exit:
+                    case TileType.Start:
+                        result.Add(tile);
+                        break;
+                }
+            }
+        }
+
+        return result;
+    }
 }

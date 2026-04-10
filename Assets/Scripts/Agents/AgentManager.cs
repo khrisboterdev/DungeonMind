@@ -24,7 +24,7 @@ public class AgentManager : MonoBehaviour
         GameObject newPerfectAgent = Instantiate(_perfectAgentPrefab);
         newPerfectAgent.GetComponent<DungeonAgent>().Initialize(dungeon);
 
-        for (int i = 0; i < 3; i++)
+        for (int i = 0; i < 10; i++)
         {
             GameObject newFogAgent = Instantiate(_fogAgentPrefab);
             newFogAgent.GetComponent<DungeonAgent>().Initialize(dungeon);

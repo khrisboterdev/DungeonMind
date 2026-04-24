@@ -3,6 +3,7 @@ using UnityEngine;
 [RequireComponent(typeof(DungeonDataGenerator))]
 public class DungeonManager : MonoBehaviour
 {
+    public static DungeonManager Instance;
     private DungeonDataGenerator _generator;
 
     [Header("Tile Prefabs")]
@@ -23,16 +24,17 @@ public class DungeonManager : MonoBehaviour
 
     private void Awake()
     {
+        Instance = this;
         _generator = GetComponent<DungeonDataGenerator>();
     }
 
-    private void Start()
+    public void GenerateNewDungeon(DungeonGenerationSettings settings)
     {
-        GenerateAndRender();
+        GenerateAndRender(settings);
         OnDungeonFinished?.Invoke(CurrentDungeon);
     }
 
-    public void GenerateAndRender()
+    public void GenerateAndRender(DungeonGenerationSettings settings)
     {
         ClearOldTiles();
 

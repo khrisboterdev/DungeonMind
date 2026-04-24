@@ -7,30 +7,30 @@ public class AgentManager : MonoBehaviour
     [SerializeField] private GameObject _perfectAgentPrefab;    
     [SerializeField] private GameObject _fogAgentPrefab;
 
-    private void Awake()
-    {
-        DungeonManager dungeonManager = FindFirstObjectByType<DungeonManager>();
-        if (dungeonManager == null)
-        {
-            Debug.LogError("No Dungeon Manager found!");
-            Destroy(gameObject);
-        }
+    //private void Awake()
+    //{
+    //    DungeonManager dungeonManager = FindFirstObjectByType<DungeonManager>();
+    //    if (dungeonManager == null)
+    //    {
+    //        Debug.LogError("No Dungeon Manager found!");
+    //        Destroy(gameObject);
+    //    }
 
-        dungeonManager.OnDungeonFinished += OnDungeonFinished;
-    }
+    //    dungeonManager.OnDungeonFinished += OnDungeonFinished;
+    //}
 
-    private void OnDungeonFinished(DungeonData dungeon)
-    {
-        GameObject newPerfectAgent = Instantiate(_perfectAgentPrefab);
-        newPerfectAgent.GetComponent<DungeonAgent>().Initialize(dungeon);
+    //private void OnDungeonFinished(DungeonData dungeon)
+    //{
+    //    GameObject newPerfectAgent = Instantiate(_perfectAgentPrefab);
+    //    newPerfectAgent.GetComponent<DungeonAgent>().Initialize(dungeon);
 
-        for (int i = 0; i < 10; i++)
-        {
-            GameObject newFogAgent = Instantiate(_fogAgentPrefab);
-            newFogAgent.GetComponent<DungeonAgent>().Initialize(dungeon);
+    //    for (int i = 0; i < 10; i++)
+    //    {
+    //        GameObject newFogAgent = Instantiate(_fogAgentPrefab);
+    //        newFogAgent.GetComponent<DungeonAgent>().Initialize(dungeon);
 
-            if (i == 0)
-                FindFirstObjectByType<DungeonViewer>().StartFollowAgent(newFogAgent.transform);
-        }        
-    }
+    //        if (i == 0)
+    //            FindFirstObjectByType<DungeonViewer>().StartFollowAgent(newFogAgent.transform);
+    //    }        
+    //}
 }

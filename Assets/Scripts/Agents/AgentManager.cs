@@ -66,7 +66,7 @@ public class AgentManager : MonoBehaviour
 
         if (_currentAgents.Count == 0)
         {
-            _uiController.DisplayRunResults();
+            _uiController.DisplayRunResults(MetricsManager.Instance.);
         }
     }
 }

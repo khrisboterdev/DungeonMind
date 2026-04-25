@@ -6,6 +6,8 @@ public class DungeonManager : MonoBehaviour
     public static DungeonManager Instance;
     private DungeonDataGenerator _generator;
 
+    [SerializeField] private DungeonViewer _viewer;
+
     [Header("Tile Prefabs")]
     [SerializeField] private GameObject _floorPrefab;
     [SerializeField] private GameObject _emptyPrefab;
@@ -32,6 +34,7 @@ public class DungeonManager : MonoBehaviour
     {
         GenerateAndRender(settings);
         OnDungeonFinished?.Invoke(CurrentDungeon);
+        _viewer.CenterCamera(CurrentDungeon.Width, CurrentDungeon.Height);
     }
 
     public void GenerateAndRender(DungeonGenerationSettings settings)

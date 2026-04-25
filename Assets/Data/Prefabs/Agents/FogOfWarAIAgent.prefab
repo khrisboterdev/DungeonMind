@@ -104,7 +104,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 217e2af61ed44c545ba5664098f4b718, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FogExplorerAgent
-  _moveSpeed: 15
+  _moveSpeed: 30
   _tileSize: 1
-  _pauseAtTile: 0.05
+  _pauseAtTile: 0
   _revealRadius: 3

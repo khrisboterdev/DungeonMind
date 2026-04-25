@@ -2,25 +2,13 @@ using UnityEngine;
 
 public class DungeonViewer : MonoBehaviour
 {
-    private Transform _target;
-
-    private void LateUpdate()
+    public void CenterCamera(int mapWidth, int mapHeight)
     {
-        if (_target != null)
-        {
-            FollowTarget();
-        }
-    }
+        Vector3 newPosition;
+        newPosition.x = Mathf.RoundToInt(mapWidth / 2);
+        newPosition.y = Mathf.RoundToInt(mapHeight / 2);
+        newPosition.z = -10f;
 
-    public void StartFollowAgent(Transform target)
-    {
-        _target = target;
-    }
-
-    private void FollowTarget()
-    {
-        Vector3 newPosition = _target.position;
-        newPosition.z = -10;
         transform.position = newPosition;
     }
 }

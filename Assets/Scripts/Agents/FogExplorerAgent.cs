@@ -18,7 +18,6 @@ public class FogExplorerAgent : DungeonAgent
 
     private Coroutine _exploreRoutine;
     private bool _foundExit = false;
-
     private float _startTime = 0;
 
     protected override void SolveDungeon(DungeonData dungeon)
@@ -55,6 +54,7 @@ public class FogExplorerAgent : DungeonAgent
             {
                 _foundExit = true;
                 ReportMetrics();
+                AgentManager.Instance.AgentReportDone(this);
                 yield break;
             }
 

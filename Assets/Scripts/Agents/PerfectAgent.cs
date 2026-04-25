@@ -58,7 +58,7 @@ public class PerfectAgent : DungeonAgent
 
         Debug.Log("Agent reached the exit.");
         ReportSolveMetrics();
-        Destroy(gameObject);
+        AgentManager.Instance.AgentReportDone(this);
     }
 
     private void ReportSolveMetrics()

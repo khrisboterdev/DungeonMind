@@ -1,6 +1,8 @@
 using System;
 using UnityEngine;
 using TMPro;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class UIController : MonoBehaviour
 {
@@ -11,9 +13,13 @@ public class UIController : MonoBehaviour
     [SerializeField] private TMP_InputField _roomWidthMaxInput;
     [SerializeField] private TMP_InputField _roomHeightMinInput;
     [SerializeField] private TMP_InputField _roomHeightMaxInput;
-
     [SerializeField] private TextMeshProUGUI _errorText;
     [SerializeField] private GameObject _menuObject;
+    [SerializeField] private GameObject _mainControls;
+    [SerializeField] private GameObject _runResults;
+    [SerializeField] private TextMeshProUGUI _runResultsText;
+    [SerializeField] private Button _dataCollectionButton;
+
 
     public void TryDungeonGenerate()
     {
@@ -40,12 +46,33 @@ public class UIController : MonoBehaviour
         DungeonManager.Instance.GenerateNewDungeon(newSettings);
     }
 
+    public void StartDataCollection()
+    {
+        _dataCollectionButton.interactable = false;
+        _runResults.gameObject.SetActive(true);
+        _runResultsText.text = "Collecting Data...";
+
+        AgentManager.Instance.SpawnPerfectAgent();
+        AgentManager.Instance.SpawnAgents(100);
+    }
+
     public void OnDungeonFinish(DungeonData data)
     {
         if (data == null)
             _errorText.text = "Error generating dungeon. Please try different settings.";
 
         _menuObject.SetActive(false);
+        _mainControls.SetActive(true);
+    }
+
+    public void ReturnToMainMenu() 
+    {
+        SceneManager.LoadScene(0);
+    }
+
+    public void DisplayRunResults()
+    {
+
     }
 }
 

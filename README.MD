@@ -100,6 +100,14 @@ These datasets allow for comparison across multiple runs and support further ana
 
 ---
 
+# Python Requirements for ML
+
+This project requires python to be installed (And in your PATH variable)
+* [Python 3.14 Installer](https://www.python.org/ftp/python/3.14.4/python-3.14.4-amd64.exe)
+
+Additionally, run the following command post install
+* `pip install pandas scikit-learn`
+
 # Example Metrics
 
 Example metrics collected from simulation runs include:

@@ -86,7 +86,19 @@ public class UIController : MonoBehaviour
         {
             _resultIndex = 1;
             _runResultsText.text = MetricsManager.Instance.GetCorrelationResults();
+            _nextResultButton.GetComponentInChildren<TextMeshProUGUI>().text = "Start ML Regression";
+            return;
+
+        }
+        if (_resultIndex == 1)
+        {
             _nextResultButton.interactable = false;
+
+            var batch = SimulationResultIO.LoadBatchResults("FogOfWarAIAgent(Clone)_runs.json");
+            var dataset = MLDataBuilder.BuildDataset(batch);
+            MLDataExporter.ExportToCSV(dataset, "ml_dataset.csv");
+
+            PythonRegressionRunner.RunRegression();
         }
     }
 }

@@ -19,7 +19,9 @@ public class UIController : MonoBehaviour
     [SerializeField] private GameObject _runResults;
     [SerializeField] private TextMeshProUGUI _runResultsText;
     [SerializeField] private Button _dataCollectionButton;
+    [SerializeField] private Button _nextResultButton;
 
+    private int _resultIndex = 0;
 
     public void TryDungeonGenerate()
     {
@@ -70,9 +72,22 @@ public class UIController : MonoBehaviour
         SceneManager.LoadScene(0);
     }
 
-    public void DisplayRunResults()
+    public void DisplayRunResults(string runMetricsString)
     {
+        _resultIndex = 0;
+        _runResultsText.text = runMetricsString;
 
+        _nextResultButton.interactable = true;
+    }
+
+    public void ShowNextResult()
+    {
+        if (_resultIndex == 0)
+        {
+            _resultIndex = 1;
+            _runResultsText.text = MetricsManager.Instance.GetCorrelationResults();
+            _nextResultButton.interactable = false;
+        }
     }
 }
 

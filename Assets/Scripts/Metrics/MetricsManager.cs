@@ -79,4 +79,24 @@ public class MetricsManager : MonoBehaviour
         result.WalkableTileCount = _dungeonData.WalkableTiles().Count;        
         return result;
     }
+
+    public string GetResultMetrics()
+    {
+        SimulationBatchResult batch = SimulationResultIO.LoadBatchResults("FogOfWarAIAgent(Clone)_runs.json");
+
+        SimulationBatchSummary summary = SimulationBatchAnalyzer.Analyze(batch);
+
+        string report = SimulationBatchAnalyzer.BuildReport(summary);
+
+        return report;
+    }
+
+    public string GetCorrelationResults()
+    {
+        SimulationBatchResult batch = SimulationResultIO.LoadBatchResults("FogOfWarAIAgent(Clone)_runs.json");
+
+        string report = SimulationBatchAnalyzer.BuildCorrelationReport(batch);
+
+        return report;
+    }
 }

@@ -21,7 +21,7 @@ public static class PythonRegressionRunner
         Directory.CreateDirectory(dataFolder);
 
         string inputCsvPath = Path.Combine(projectRoot, "Assets", DATA_FOLDER_NAME, INPUT_CSV);
-        string outputJsonPath = Path.Combine(projectRoot, "Assets/OutputJSON", OUTPUT_JSON);
+        string outputJsonPath = Path.Combine(projectRoot, "Assets", OUTPUT_JSON);
 
         if (!File.Exists(scriptPath))
         {

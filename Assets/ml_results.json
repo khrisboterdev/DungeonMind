@@ -1,0 +1,15 @@
+{
+    "model": "LinearRegression",
+    "totalRows": 338,
+    "trainRows": 253,
+    "testRows": 85,
+    "meanAbsoluteError": 0.05369771931964845,
+    "r2Score": 0.11130689564180807,
+    "coefficients": {
+        "RoomCount": -0.09408183191745674,
+        "WalkableTiles": -0.0010081315939777288,
+        "OptimalPath": 0.0012075871669363835,
+        "Complexity": 0.016462198715177328
+    },
+    "intercept": 0.09047693502117282
+}

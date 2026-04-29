@@ -48,10 +48,10 @@ def main():
         "testRows": int(len(X_test)),
         "meanAbsoluteError": float(mean_absolute_error(y_test, predictions)),
         "r2Score": float(r2_score(y_test, predictions)),
-        "coefficients": {
-            col: float(coef)
+        "coefficients": [
+            {"feature": col, "value": float(coef)}
             for col, coef in zip(feature_columns, model.coef_)
-        },
+        ],
         "intercept": float(model.intercept_)
     }
 

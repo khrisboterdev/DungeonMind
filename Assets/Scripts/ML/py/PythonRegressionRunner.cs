@@ -60,10 +60,10 @@ public static class PythonRegressionRunner
 
         if (!string.IsNullOrWhiteSpace(errors))
             UnityEngine.Debug.LogWarning(errors);
-
+        
         if (File.Exists(outputJsonPath))
         {
-            string resultJson = File.ReadAllText(outputJsonPath);
+            var resultJson = File.ReadAllText(outputJsonPath);
             UnityEngine.Debug.Log($"Regression results saved:\n{resultJson}");
         }
     }

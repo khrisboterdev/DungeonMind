@@ -90,8 +90,9 @@ public class UIController : MonoBehaviour
             return;
 
         }
-        if (_resultIndex == 1)
+        else if (_resultIndex == 1)
         {
+            _resultIndex = 2;
             _nextResultButton.interactable = false;
 
             var batch = SimulationResultIO.LoadBatchResults("FogOfWarAIAgent(Clone)_runs.json");
@@ -99,6 +100,16 @@ public class UIController : MonoBehaviour
             MLDataExporter.ExportToCSV(dataset, "ml_dataset.csv");
 
             PythonRegressionRunner.RunRegression();
+            var result = MLResultFormatter.BuildDisplayText();
+            _runResultsText.text = result;
+            _nextResultButton.interactable = true;
+            _nextResultButton.GetComponentInChildren<TextMeshProUGUI>().text = "Show interpreted results";
+        }
+        else if (_resultIndex == 2)
+        {
+            _nextResultButton.interactable = false;
+            _runResultsText.text = MLResultFormatter.BuildDungeonPredictionText(
+                DungeonManager.Instance.CurrentDungeon);
         }
     }
 }

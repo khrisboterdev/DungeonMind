@@ -107,4 +107,4 @@ MonoBehaviour:
   _moveSpeed: 30
   _tileSize: 1
   _pauseAtTile: 0
-  _revealRadius: 3
+  _revealRadius: 6

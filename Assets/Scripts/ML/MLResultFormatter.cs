@@ -6,8 +6,8 @@ public static class MLResultFormatter
 {    
     private static MLRegressionResult LoadResults()
     {
-        string projectRoot = Directory.GetParent(Application.dataPath).FullName;
-        string folderPath = Path.Combine(projectRoot, "Assets");
+        string projectRoot = Directory.GetParent(Application.persistentDataPath).FullName;
+        string folderPath = Path.Combine(projectRoot, "MLData");
         string filePath = Path.Combine(folderPath, "ml_results.json");
 
         if (!File.Exists(filePath))

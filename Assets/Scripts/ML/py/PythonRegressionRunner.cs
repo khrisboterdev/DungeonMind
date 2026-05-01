@@ -14,14 +14,15 @@ public static class PythonRegressionRunner
     public static void RunRegression()
     {
         string projectRoot = Directory.GetParent(Application.dataPath).FullName;
+        string dataRoot = Directory.GetParent(Application.persistentDataPath).FullName;
 
         string scriptPath = Path.Combine(projectRoot, PYTHON_SCRIPT_LOCATION);
-        string dataFolder = Path.Combine(projectRoot, "Assets", DATA_FOLDER_NAME);
+        string dataFolder = Path.Combine(dataRoot, DATA_FOLDER_NAME);
 
         Directory.CreateDirectory(dataFolder);
 
-        string inputCsvPath = Path.Combine(projectRoot, "Assets", DATA_FOLDER_NAME, INPUT_CSV);
-        string outputJsonPath = Path.Combine(projectRoot, "Assets", OUTPUT_JSON);
+        string inputCsvPath = Path.Combine(dataFolder, INPUT_CSV);
+        string outputJsonPath = Path.Combine(dataFolder, OUTPUT_JSON);
 
         if (!File.Exists(scriptPath))
         {

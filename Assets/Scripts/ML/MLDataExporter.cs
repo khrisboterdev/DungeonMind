@@ -23,8 +23,8 @@ public static class MLDataExporter
             );
         }
 
-        string projectRoot = Directory.GetParent(Application.dataPath).FullName;
-        string folderPath = Path.Combine(projectRoot, "Assets", "MLData");
+        string dataRoot = Directory.GetParent(Application.persistentDataPath).FullName;
+        string folderPath = Path.Combine(dataRoot, "MLData");
 
         Directory.CreateDirectory(folderPath);
 

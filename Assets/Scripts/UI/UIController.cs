@@ -23,6 +23,23 @@ public class UIController : MonoBehaviour
 
     private int _resultIndex = 0;
 
+    private void Start()
+    {
+        LoadPlayerPrefs();
+    }
+
+    private void LoadPlayerPrefs()
+    {
+        Debug.Log("Loading previous dungeon values...");
+
+        _mapWidthInput.text = PlayerPrefs.GetInt("MapWidth", 80).ToString();
+        _mapHeightInput.text = PlayerPrefs.GetInt("MapHeight", 50).ToString();
+        _roomWidthMinInput.text = PlayerPrefs.GetInt("RoomWidthMin", 4).ToString();
+        _roomWidthMaxInput.text = PlayerPrefs.GetInt("RoomWidthMax", 24).ToString();
+        _roomHeightMinInput.text = PlayerPrefs.GetInt("RoomHeightMin", 3).ToString();
+        _roomHeightMaxInput.text = PlayerPrefs.GetInt("RoomHeightMax", 20).ToString();
+    }
+
     public void TryDungeonGenerate()
     {
         _errorText.text = string.Empty;
@@ -36,6 +53,13 @@ public class UIController : MonoBehaviour
             RoomHeightMin = Int32.Parse(_roomHeightMinInput.text),
             RoomHeightMax = Int32.Parse(_roomHeightMaxInput.text)
         };
+
+        PlayerPrefs.SetInt("MapHeight", newSettings.MapHeight);
+        PlayerPrefs.SetInt("MapWidth", newSettings.MapWidth);
+        PlayerPrefs.SetInt("RoomWidthMin", newSettings.RoomWidthMin);
+        PlayerPrefs.SetInt("RoomWidthMax", newSettings.RoomWidthMax);
+        PlayerPrefs.SetInt("RoomHeightMin", newSettings.RoomHeightMin);
+        PlayerPrefs.SetInt("RoomHeightMax", newSettings.RoomHeightMax);
 
         var dungeonException = DungeonSettingsValidator.ValidateDungeonSettings(newSettings);
         if (dungeonException != null)
